@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django_daraja.views import MpesaCoreView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^daraja/', view=MpesaCoreView.as_view(), name="django_daraja_index"),
+
 ]

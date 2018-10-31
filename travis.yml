@@ -1,0 +1,29 @@
+language: python
+python:
+  - "2.7"
+
+cache:
+  directories:
+    - pip_download_cache
+
+before_install:
+  - mkdir -p $PIP_DOWNLOAD_CACHE
+
+install:
+  - pip install tox
+  - pip install -e .
+
+script:
+  - tox -e $TOX_ENV
+
+env:
+  global:
+    - PIP_DOWNLOAD_CACHE="pip_download_cache"
+  matrix:
+    - TOX_ENV=py27-django1.8
+    - TOX_ENV=py27-django1.11
+    - TOX_ENV=py34-django1.11
+    - TOX_ENV=py37-django2.1
+
+notifications:
+  email: false

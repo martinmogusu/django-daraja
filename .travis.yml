@@ -26,4 +26,8 @@ env:
     - TOX_ENV=py37-django2.1
 
 notifications:
-  email: false
+  email:
+    recipients:
+      - martinmogusu@gmail.com
+    on_success: always
+    on_failure: always

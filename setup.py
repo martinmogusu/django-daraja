@@ -19,8 +19,7 @@ setup(
 
 Read the documentation at https://django-admin.readthedocs.io
 
-Daraja API documentation can be found at https://developer.safaricom.co.ke
-    """
+Daraja API documentation can be found at https://developer.safaricom.co.ke""",
     author="Martin Mogusu",
     author_email="martinmogusu@gmail.com",
     url="https://github.com/martinmogusu/django-daraja",

@@ -2,10 +2,25 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
+from django_daraja.mpesa.core import *
 
-class MpesaCoreView(View):
+from datetime import datetime
 
-	def get(self, request):
-		return HttpResponse(10)
+cl = MpesaClient()
+
+def index(request):
+
+	return HttpResponse(10)
+
+def oauth_success(request):
+	r = cl.access_token()
+	return JsonResponse(r, safe=False)
+
+def stk_push_success(request):
+	phone_number = '0719748260'
+	amount = '1'
+	account_reference = 'ABC001'
+	r = cl.stk_push(phone_number, amount, account_reference)
+	return JsonResponse(r.json())

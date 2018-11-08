@@ -31,6 +31,8 @@ Daraja API documentation can be found at https://developer.safaricom.co.ke""",
     include_package_data=True,
     install_requires=[
         "Django>=1.11",
+        "python-decouple",
+        "requests"
     ],
     tests_require=[
         "nose",

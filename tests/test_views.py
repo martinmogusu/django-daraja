@@ -7,5 +7,9 @@ from django.test import TestCase
 class MpesaCoreTestCase(TestCase):
 
 	def test_index_view(self):
+		'''
+		Test home page content
+		'''
+		
 		response = self.client.get(reverse("django_daraja_index"))
-		self.assertEqual(response.content, b"10")
+		self.assertEqual(response.content, b"Welcome to the home of daraja APIs")

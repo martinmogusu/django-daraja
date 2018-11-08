@@ -12,7 +12,7 @@ cl = MpesaClient()
 
 def index(request):
 
-	return HttpResponse(10)
+	return HttpResponse('Welcome to the home of daraja APIs')
 
 def oauth_success(request):
 	r = cl.access_token()

@@ -29,6 +29,7 @@ def api_base_url():
 	'''
 	Gets the base URL depending on the development environment (sandbox or production)
 	'''
+
 	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
 	if mpesa_environment == 'sandbox':
 		return 'https://sandbox.safaricom.co.ke/'
@@ -37,15 +38,27 @@ def api_base_url():
 	else:
 		raise MpesaConfigurationException('Mpesa environment not configured properly - MPESA_ENVIRONMENT should be sandbox or production')
 
-def _generate_access_token():
+def generate_access_token_request(consumer_key = None, consumer_secret = None):
+	'''
+	Makes call to OAuth API
+	'''
+
 	url = api_base_url() + 'oauth/v1/generate?grant_type=client_credentials'
-	consumer_key = mpesa_config('MPESA_CONSUMER_KEY')
-	consumer_secret = mpesa_config('MPESA_CONSUMER_SECRET')
+	consumer_key = consumer_key if consumer_key is not None else mpesa_config('MPESA_CONSUMER_KEY') 
+	consumer_secret = consumer_secret if consumer_secret is not None else mpesa_config('MPESA_CONSUMER_SECRET')
 	r = requests.get(url, auth=(consumer_key, consumer_secret))
-	access_token = json.loads(r.text)['access_token']
+	return r
+
+def generate_access_token():
+	'''
+	Parses OAuth response to generate access token, then updates database access token value
+	'''
+
+	r = generate_access_token_request()
+	token = json.loads(r.text)['access_token']
 
 	AccessToken.objects.all().delete()
-	AccessToken.objects.create(token=access_token)
+	access_token = AccessToken.objects.create(token=token)
 
 	return access_token
 
@@ -55,16 +68,18 @@ def mpesa_access_token():
 	Otherwise returns existing access token
 	'''
 
+	# access_token = generate_access_token()
+
 	access_token = AccessToken.objects.first()
 	if access_token == None:
 		# No access token found
-		access_token = _generate_access_token()
+		access_token = generate_access_token()
 	else:
 		delta = timezone.now() - access_token.created_at
 		minutes = (delta.total_seconds()//60)%60
 		if minutes > 50:
 			# Access token expired
-			access_token = _generate_access_token()	
+			access_token = generate_access_token()	
 	
 	return access_token.token
 
@@ -72,6 +87,7 @@ def format_phone_number(phone_number):
 	'''
 	Formats phone number into the format 2547XXXXXXXX
 	'''
+
 	if len(phone_number) < 9:
 		raise IllegalPhoneNumberException('Phone number too short')
 	else:

@@ -15,7 +15,9 @@ setup(
     name="django-daraja",
     version="1.0",
     description="A python django library for interacting with the MPESA Daraja API.",
-    long_description="""This is a django module based on the MPESA daraja API. Use it to interact with the MPESA API in a simplified manner, abstracting the details for a simple, intuitive usage experience, as well as extensive error handling.    
+    long_description=
+"""
+This is a django module based on the MPESA daraja API. Use it to interact with the MPESA API in a simplified manner, abstracting the details for a simple, intuitive usage experience, as well as extensive error handling.    
 
 Read the documentation at https://django-admin.readthedocs.io
 

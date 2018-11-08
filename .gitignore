@@ -26,3 +26,9 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# Environment variables configuration
+.env
+
+# File based database
+*.sqlite3

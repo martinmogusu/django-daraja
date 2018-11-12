@@ -37,6 +37,7 @@ def api_base_url():
 	'''
 
 	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
+	print('Current MPESA Environment: ', mpesa_environment)
 	if mpesa_environment == 'sandbox':
 		return 'https://sandbox.safaricom.co.ke/'
 	elif mpesa_environment == 'production':

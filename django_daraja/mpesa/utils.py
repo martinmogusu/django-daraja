@@ -8,6 +8,7 @@ import requests
 import json
 from django.utils import timezone
 from decouple import config, UndefinedValueError
+import os
 
 def mpesa_config(key):
 	'''
@@ -20,7 +21,12 @@ def mpesa_config(key):
 	try:
 		value = config(key)
 	except UndefinedValueError:
-		raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
+		# Fallback - read environment variable from os environment
+		val = os.getenv(key)
+		if val is not None:
+			value = val
+		else:
+			raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
 
 	return value
 

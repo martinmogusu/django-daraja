@@ -9,6 +9,7 @@ before_install:
 
 install:
   - pip install tox
+  - pip install tox-travis
   - pip install -e .
 
 script:

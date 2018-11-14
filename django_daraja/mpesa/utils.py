@@ -21,12 +21,7 @@ def mpesa_config(key):
 	try:
 		value = config(key)
 	except UndefinedValueError:
-		# Fallback - read environment variable from os environment
-		val = os.getenv(key)
-		if val is not None:
-			value = val
-		else:
-			raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
+		raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
 
 	return value
 
@@ -37,7 +32,7 @@ def api_base_url():
 	'''
 
 	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
-	print('Current MPESA Environment: ', mpesa_environment)
+
 	if mpesa_environment == 'sandbox':
 		return 'https://sandbox.safaricom.co.ke/'
 	elif mpesa_environment == 'production':

@@ -11,7 +11,8 @@ This is a django library that interacts with the MPESA Daraja API.
 .. toctree::
    :maxdepth: 2
    
-   01-testing
+   01-quick_start
+   02-testing
 
 
 

@@ -9,6 +9,27 @@ import json
 from django.utils import timezone
 from decouple import config, UndefinedValueError
 import os
+from requests import Response
+
+class MpesaResponse(Response):
+	response_description = ''
+	error_code = None
+	error_message = ''
+
+def mpesa_response(r):
+	'''
+	Creates MpesaResponse object from requests.Response object
+	
+	Arguments:
+		r {requests.Response} -- The response to convert
+	'''
+
+	r.__class__ = MpesaResponse
+	json_response = r.json()
+	r.response_description = json_response.get('ResponseDescription', '')
+	r.error_code = json_response.get('errorCode')
+	r.error_message = json_response.get('errorMessage', '')
+	return r
 
 def mpesa_config(key):
 	'''
@@ -21,6 +42,7 @@ def mpesa_config(key):
 	try:
 		value = config(key)
 	except UndefinedValueError:
+		# Check key in settings file
 		raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
 
 	return value
@@ -48,7 +70,14 @@ def generate_access_token_request(consumer_key = None, consumer_secret = None):
 	url = api_base_url() + 'oauth/v1/generate?grant_type=client_credentials'
 	consumer_key = consumer_key if consumer_key is not None else mpesa_config('MPESA_CONSUMER_KEY') 
 	consumer_secret = consumer_secret if consumer_secret is not None else mpesa_config('MPESA_CONSUMER_SECRET')
-	r = requests.get(url, auth=(consumer_key, consumer_secret))
+
+	try:
+		r = requests.get(url, auth=(consumer_key, consumer_secret))
+	except requests.exceptions.ConnectionError:
+		raise MpesaConnectionError('Connection failed')
+	except Exception:
+		return ex.message
+	
 	return r
 
 def generate_access_token():
@@ -79,6 +108,7 @@ def mpesa_access_token():
 	else:
 		delta = timezone.now() - access_token.created_at
 		minutes = (delta.total_seconds()//60)%60
+		print('minutes: ', minutes)
 		if minutes > 50:
 			# Access token expired
 			access_token = generate_access_token()	

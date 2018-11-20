@@ -36,4 +36,4 @@ class MpesaOauthTestCase(TestCase):
 		token = generate_access_token()
 		delta = timezone.now() - token.created_at
 		minutes = (delta.total_seconds()//60)%60
-		self.assertLessEqual(minutes, 50)
+		self.assertLessEqual(minutes, 30)

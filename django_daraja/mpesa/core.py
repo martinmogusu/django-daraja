@@ -24,7 +24,7 @@ class MpesaClient:
 	def access_token(self):
 		return mpesa_access_token()
 
-	def stk_push(self, phone_number, amount, account_reference, transaction_desc = 'Description'):
+	def stk_push(self, phone_number, amount, account_reference, transaction_desc, callback_url):
 		phone_number = format_phone_number(phone_number)
 		url = api_base_url() + 'mpesa/stkpush/v1/processrequest'
 		passkey = mpesa_config('MPESA_PASSKEY')
@@ -40,20 +40,19 @@ class MpesaClient:
 		transaction_type = 'CustomerPayBillOnline'
 		party_a = phone_number
 		party_b = business_short_code
-		callback_url = 'https://darajambili.herokuapp.com/express-payment'
 
 		data = {
 			'BusinessShortCode': business_short_code,
-			  'Password': password,
-			  'Timestamp': timestamp,
-			  'TransactionType': transaction_type,
-			  'Amount': '1',
-			  'PartyA': party_a,
-			  'PartyB': party_b,
-			  'PhoneNumber': phone_number,
-			  'CallBackURL': callback_url,
-			  'AccountReference': account_reference,
-			  'TransactionDesc': transaction_desc
+			'Password': password,
+			'Timestamp': timestamp,
+			'TransactionType': transaction_type,
+			'Amount': '1',
+			'PartyA': party_a,
+			'PartyB': party_b,
+			'PhoneNumber': phone_number,
+			'CallBackURL': callback_url,
+			'AccountReference': account_reference,
+			'TransactionDesc': transaction_desc
 		}
 
 		headers = {
@@ -61,14 +60,12 @@ class MpesaClient:
 			'Content-type': 'application/json'
 		}
 
-		print('Password: ', password)
-		print('Password: ', password)
-
 		try:
 			r = requests.post(url, json=data, headers=headers)
+			response = mpesa_response(r)
 			return r
 		except requests.exceptions.ConnectionError:
 			raise MpesaConnectionError('Connection failed')
-		except Exception:
-			return ex.message
+		except Exception as ex:
+			raise MpesaConnectionError(str(ex))
 

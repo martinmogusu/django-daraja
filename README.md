@@ -3,6 +3,8 @@ This is a django module based on the MPESA daraja API. Use it to interact with t
 
 [![Build Status](https://travis-ci.org/martinmogusu/django-daraja.svg?branch=master)](https://travis-ci.org/martinmogusu/django-daraja)
 [![Documentation Status](https://readthedocs.org/projects/django-daraja/badge/?version=latest)](https://django-daraja.readthedocs.io/en/latest/?badge=latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://badge.fury.io/py/django-daraja.svg)](https://badge.fury.io/py/django-daraja)
 
 
 Read the documentation at https://django-daraja.readthedocs.io

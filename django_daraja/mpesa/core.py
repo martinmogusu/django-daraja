@@ -25,6 +25,14 @@ class MpesaClient:
 		return mpesa_access_token()
 
 	def stk_push(self, phone_number, amount, account_reference, transaction_desc, callback_url):
+		if str(account_reference).strip() == '':
+			raise MpesaInvalidParameterException('Account reference cannot be blank')
+		if str(transaction_desc).strip() == '':
+			raise MpesaInvalidParameterException('Transaction description cannot be blank')
+		if not isinstance(amount, int):
+			raise MpesaInvalidParameterException('Amount must be an integer')
+
+
 		phone_number = format_phone_number(phone_number)
 		url = api_base_url() + 'mpesa/stkpush/v1/processrequest'
 		passkey = mpesa_config('MPESA_PASSKEY')

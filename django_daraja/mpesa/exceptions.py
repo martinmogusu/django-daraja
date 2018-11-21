@@ -20,3 +20,13 @@ class MpesaConfigurationException(Exception):
 	Raised when Mpesa environment variables are not configured properly
 	'''
 	pass
+
+class MpesaInvalidParameterException(Exception):
+	'''
+	Raised when an an invalid parameter is passed in a function call
+	Extends:
+		Exception
+	'''
+	pass
+
+

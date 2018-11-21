@@ -10,6 +10,7 @@ from django.utils import timezone
 from decouple import config, UndefinedValueError
 import os
 from requests import Response
+import time
 
 class MpesaResponse(Response):
 	response_description = ''
@@ -124,3 +125,22 @@ def format_phone_number(phone_number):
 		raise IllegalPhoneNumberException('Phone number too short')
 	else:
 		return '254' + phone_number[-9:]
+
+def sleep(seconds, message=''):
+	'''
+	Sleeps for the specified number of seconds
+	
+	Arguments:
+		seconds {float} -- Number of seconds to sleep, can be a float
+		message {str} -- (Optional) message to display
+	'''
+
+	print()
+	print('===')
+	print(message, end="")
+	for i in range(seconds * 2):
+		time.sleep(0.5)
+		print('.', end="")
+	print()
+	print('===')
+	print()

@@ -9,10 +9,9 @@ Welcome to django-daraja's documentation!
 This is a django library that interacts with the MPESA Daraja API.
 
 .. toctree::
-   :maxdepth: 2
    
-   01-quick_start
-   02-testing
+   01-introduction
+   02-quick_start
 
 
 

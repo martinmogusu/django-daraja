@@ -2,13 +2,19 @@ Quick Start Guide
 =================
 This is a quick start guide on seting up a simple project and implement some features of the django-daraja library.
 
+1. Install
+----------
+
 To install the package, run
 
     .. code-block:: none
 
         $ pip install django_daraja
 
-First, create  a django project
+2. Create a django project
+--------------------------
+
+Run this code to create  a django project
 
     .. code-block:: none
 
@@ -16,9 +22,14 @@ First, create  a django project
         $ cd my_site
         $ django-admin startapp my_app
 
+3. Environment Configuration
+----------------------------
+
 Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with these details:
 
     .. code-block:: none
+       :caption: .env
+       :name: .env
 
         # MPESA Configuration variables     
                 
@@ -56,9 +67,16 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
         
         MPESA_PASSKEY=mpesa_passkey
 
+Alternatively, in ``settings.py`` you can add the environment configuration as settings variables. (This is not very recommended since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your commits.)
+
+4 Settings configuration
+------------------------
+
 In ``settings.py``, add ``django_daraja`` to the ``INSTALLED_APPS`` list
 
     .. code-block:: python
+       :caption: settings.py
+       :name: settings.py
 
         INSTALLED_APPS = [
             ...,
@@ -67,12 +85,28 @@ In ``settings.py``, add ``django_daraja`` to the ``INSTALLED_APPS`` list
             'my_app',
         ]
 
+5. URL Configuration
+--------------------
+
 In ``urls.py``, Add the URL configuration
 
+Python 2:
+    .. code-block:: python
+
+        from django.conf.urls import url, include
+        from django.contrib import admin
+
+        urlpatterns = [
+            url(r'^admin/', admin.site.urls),
+            url(r'^daraja/', include('django_daraja.urls')),
+        ]
+
+Python 3:
     .. code-block:: python
 
         from django.contrib import admin
         from django.urls import path, include
+        
         urlpatterns = [
             path('admin/', admin.site.urls),
             path('', include('my_app.urls')),
@@ -80,6 +114,17 @@ In ``urls.py``, Add the URL configuration
 
 In ``my_app/urls.py`` Add this code to create a test endpoint
 
+Python 2:
+    .. code-block:: python
+       
+        from django.conf.urls import url, include
+        from . import views
+
+        urlpatterns = [
+            url(r'^$', views.index, name='index'),
+        ]
+
+Python 3:
     .. code-block:: python
 
         from django.urls import path, include
@@ -88,6 +133,8 @@ In ``my_app/urls.py`` Add this code to create a test endpoint
             path('', views.index, name='index'),
         ]
 
+6. Create a view
+----------------
 
 In ``my_app/views.py`` Create a test index view
 
@@ -110,12 +157,17 @@ In ``my_app/views.py`` Create a test index view
             response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
             return HttpResponse(response.text)
 
+7. Run Migrations
+-----------------
 
 On the command line, run migrations to add the models created by the library
 
     .. code-block:: none
 
         $ python manage.py migrate
+
+8. Run the server
+-----------------
 
 Then run the server
     .. code-block:: none

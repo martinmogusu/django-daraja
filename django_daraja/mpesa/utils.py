@@ -2,6 +2,7 @@
 General utilities for the MPESA functions
 '''
 
+from __future__ import print_function
 from .exceptions import *
 from django_daraja.models import AccessToken
 import requests
@@ -12,10 +13,12 @@ import os
 from requests import Response
 import time
 
+
 class MpesaResponse(Response):
-	response_description = ''
+	response_description = ""
 	error_code = None
 	error_message = ''
+
 
 def mpesa_response(r):
 	'''
@@ -31,6 +34,7 @@ def mpesa_response(r):
 	r.error_code = json_response.get('errorCode')
 	r.error_message = json_response.get('errorMessage', '')
 	return r
+
 
 def mpesa_config(key):
 	'''

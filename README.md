@@ -1,4 +1,4 @@
-## django-admin
+## django-daraja
 This is a django module based on the MPESA daraja API. Use it to interact with the MPESA API in a simplified manner, abstracting the details for a simple, intuitive usage experience, as well as extensive error handling.
 
 [![Build Status](https://travis-ci.org/martinmogusu/django-daraja.svg?branch=master)](https://travis-ci.org/martinmogusu/django-daraja)
@@ -10,3 +10,31 @@ This is a django module based on the MPESA daraja API. Use it to interact with t
 Read the documentation at https://django-daraja.readthedocs.io
 
 Daraja API documentation can be found at https://developer.safaricom.co.ke
+
+# Installation
+
+To install the package, run
+
+```
+$ pip install django_daraja
+```
+
+## Example
+
+An example, to send an STK push prompt to customer phone, then display response message
+
+```python
+    from django_daraja.mpesa.core import MpesaClient
+    
+    def index(request):
+        cl = MpesaClient()
+        phone_number = '0700111222'
+        amount = 1
+        account_reference = 'reference'
+        transaction_desc = 'Description'
+        callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+        response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+        return HttpResponse(response.response_description)
+```
+
+On your browser, you will receive a message `Success. Request accepted for processing` on success of the STK push. You will also receive a notification on the callback endpoint (In this case the URL with the name `mpesa_stk_push_callback`), having the results of the STK push.

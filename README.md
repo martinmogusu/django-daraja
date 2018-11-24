@@ -1,8 +1,8 @@
+![Daraja logo](https://developer.safaricom.co.ke/sites/all/themes/apigee_responsive_custom/logo.png "Daraja logo")
+
 # django-daraja
 
-![Daraja logo](logo.png "Daraja logo")
-
-This is a django module based on the MPESA daraja API. Use it to interact with the MPESA API in a simplified manner, abstracting the details for a simple, intuitive usage experience, as well as extensive error handling.
+This is a django library based on the Safaricom MPESA daraja API. Use it to interact with the MPESA API in a simplified manner, abstracting the details for a simple, intuitive usage experience, as well as extensive error handling.
 
 [![Build Status](https://travis-ci.org/martinmogusu/django-daraja.svg?branch=master)](https://travis-ci.org/martinmogusu/django-daraja)
 [![Documentation Status](https://readthedocs.org/projects/django-daraja/badge/?version=latest)](https://django-daraja.readthedocs.io/en/latest/?badge=latest)

@@ -14,14 +14,14 @@ def read(fname):
 setup(
     name='django-daraja',
     version='1.0.0',
-    description='A python django library for interacting with the MPESA Daraja API.',
+    description='A python django library for interacting with the Safaricom MPESA Daraja API.',
     long_description=
 '''
-This is a django module based on the MPESA daraja API. Use it to interact with the MPESA API in a simplified manner, abstracting the details for a simple, intuitive usage experience, as well as extensive error handling.    
+This is a django library based on the Safaricom MPESA daraja API. Use it for a simplified experience, spend less time setting up...
 
-Read the documentation at https://django-daraja.readthedocs.io
+Read the full documentation at https://django-daraja.readthedocs.io
 
-Daraja API documentation can be found at https://developer.safaricom.co.ke''',
+MPESA Daraja API documentation can be found at https://developer.safaricom.co.ke''',
     author='Martin Mogusu',
     author_email='martinmogusu@gmail.com',
     url='https://github.com/martinmogusu/django-daraja',
@@ -51,7 +51,7 @@ Daraja API documentation can be found at https://developer.safaricom.co.ke''',
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    keywords='mpesa django daraja finance mobile-money',
+    keywords='mpesa django daraja finance mobile-money safaricom api',
     project_urls={
     'Documentation': 'https://django-daraja.readthedocs.io/',
     'Source': 'https://github.com/martinmogusu/django-daraja',

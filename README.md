@@ -1,4 +1,4 @@
-![Daraja logo](https://developer.safaricom.co.ke/sites/all/themes/apigee_responsive_custom/logo.png "Daraja logo")
+![Daraja logo](logo.png "Daraja logo")
 
 # django-daraja
 

@@ -25,7 +25,12 @@ Run these commands to create  a django project
 3. Environment Configuration
 ----------------------------
 
-Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with the details below. Test credentials (for sandbox testing) can be found at https://developer.safaricom.co.ke/test_credentials. The consumer key and secret will be in the app details for a sandbox app you create in the developer portal (https://developer.safaricom.co.ke/user/me/apps)
+Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with the details below. 
+
+	.. hint::
+		Test credentials (for sandbox testing) can be found at https://developer.safaricom.co.ke/test_credentials.
+
+		Create an app at https://developer.safaricom.co.ke/user/me/apps and click on its details to obtain the consumer key and secre
 
     ..	code-block:: none
     	:caption: .env
@@ -66,7 +71,10 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
         
         MPESA_PASSKEY=mpesa_passkey
 
-Alternatively, in ``settings.py`` you can add the environment configuration as settings variables. (This is not very recommended since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your commits.)
+Alternatively, in ``settings.py`` you can add the environment configuration as settings variables. 
+
+	.. warning::
+		Adding sensitive configuration in the settings file is not very recommended since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your commits.
 
 	..	code-block:: python
 	    	:caption: settings.py
@@ -109,8 +117,8 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 
 You could also store some configuration in ``settings.py`` and other variables in a ``.env`` file. The library will first attempt to get the configuration variable from ``settings.py``, and if not found it will revert to the os environment configuration (``os.environ``) and if not found it will look for the configuratin in a ``.env`` file.
 
-**N/B:**
-Remember to add the ``.env`` file in your ``.gitignore``, to prevent having configurations within version control. You can include a ``.env.example`` file with example configurations to version control, to guide other collaborators working on your project.
+.. hint::
+	Remember to add the ``.env`` file in your ``.gitignore``, to prevent having configurations within version control. You can include a ``.env.example`` file with example configurations to version control, to guide other collaborators working on your project.
 
 4 Settings configuration
 ------------------------
@@ -159,7 +167,7 @@ Python 3:
             path('', include('my_app.urls')),
         ]
 
-In ``my_app/urls.py`` Add the code to create a test endpoint
+In ``my_app/urls.py``, add the code to create a home page, as well as the endpoint to receive notifications from MPESA
 
 Python 2:
     ..	code-block:: python
@@ -171,6 +179,7 @@ Python 2:
 
         urlpatterns = [
             url(r'^$', views.index, name='index'),
+            url(r'^daraja/stk-push$', views.stk_push_callback, name='mpesa_stk_push_callback'),
         ]
 
 Python 3:
@@ -183,6 +192,7 @@ Python 3:
 
         urlpatterns = [
             path('', views.index, name='index'),
+            path('daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
         ]
 
 6. Create a view
@@ -205,11 +215,18 @@ In ``my_app/views.py`` Create a test index view
             amount = 1
             account_reference = 'reference'
             transaction_desc = 'Description'
-            # This is a test callback URL.
-            # You can replace this with an endpoint where you wish to receive the result of the STK push transaction.
-            callback_url = 'https://darajambili.herokuapp.com/express-payment'
+            callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
             response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
             return HttpResponse(response.text)
+
+        def stk_push_callback(request):
+        	data = request.body
+        	# You can do whatever you want with the notification received from MPESA here.
+
+.. note::
+	- Use a Safaricom number that you have access to for the ``phone_number`` parameter, so as to be able to receive the prompt on your phone.
+	- You will need to define a url with the name ``mpesa_stk_push_callback``, and this is where MPESA will send the results of the STK push once the customer enters the PIN or cancels the transaction, or in case the prompt times out.
+	- This example will work if your site is already hosted, since the callback URL needs to be accessible via internet. For local testing purposes, you can use an endpoint hosted outside your site to check the notification received on the callback URL. I've hosted a test listener at https://darajambili.herokuapp.com, which you can use to view logs of notifications received. You can head over there to pick a sample STK callback URL to use.
 
 7. Run Migrations
 -----------------

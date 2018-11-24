@@ -2,14 +2,14 @@ Introduction
 ============
 This is a django library to interact with the Safaricom MPESA Daraja API (https://developer.safaricom.co.ke)
 
-Download the source code at https://github.com/martinmogusu/django-daraja.git
+Download the sour..	code at https://github.com/martinmogusu/django-daraja.git
 
 Installation
 ------------
 
 To install the package, run
 
-    .. code-block:: none
+    ..	code-block:: none
 
         $ pip install django_daraja
 
@@ -18,9 +18,9 @@ Example
 
 An example, to send an STK push prompt to customer phone, then display response message
 
-    .. code-block:: python
-       :caption: views.py
-       :name: views.py
+    ..	code-block:: python
+    	:caption: views.py
+    	:name: views.py
 
         from django_daraja.mpesa.core import MpesaClient
         

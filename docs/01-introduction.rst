@@ -2,7 +2,7 @@ Introduction
 ============
 This is a django library to interact with the Safaricom MPESA Daraja API (https://developer.safaricom.co.ke)
 
-Download the sour..	code at https://github.com/martinmogusu/django-daraja.git
+Download the source	code at https://github.com/martinmogusu/django-daraja.git
 
 Installation
 ------------

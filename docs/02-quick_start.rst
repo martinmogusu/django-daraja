@@ -14,7 +14,7 @@ To install the package, run
 2. Create a django project
 --------------------------
 
-Run th..	code to create  a django project
+Run these commands to create  a django project
 
     ..	code-block:: none
 
@@ -82,8 +82,8 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 
 	        # Credentials for the daraja app
 
-	        MPESA_CONSUMER_KEY = mpesa_consumer_key
-	        MPESA_CONSUMER_SECRET = mpesa_consumer_secret
+	        MPESA_CONSUMER_KEY = 'mpesa_consumer_key'
+	        MPESA_CONSUMER_SECRET = 'mpesa_consumer_secret'
 
 
 	        #Shortcode to use for transactions
@@ -109,10 +109,15 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 
 	        MPESA_PASSKEY = 'mpesa_passkey'
 
+You could also store some configuration in ``settings.py`` and other variables in a ``.env`` file. The library will first attempt to get the configuration variable from ``settings.py``, and if not found it will revert to the os environment configuration (``os.environ``) and if not found it will look for the configuratin in a ``.env`` file.
+
+N/B:
+Remember to add the ``.env`` file in your ``.gitignore``, to prevent having configurations within version control. You can include a ``.env.example`` file with example configurations to version control, to guide other collaborators working on your project.
+
 4 Settings configuration
 ------------------------
 
-In ``settings.py``, add ``django_daraja`` to the ``INSTALLED_APPS`` list
+In ``settings.py``, add ``django_daraja``  and ``my_app`` to the ``INSTALLED_APPS`` list
 
     ..	code-block:: python
     	:caption: settings.py
@@ -140,7 +145,7 @@ Python 2:
 
         urlpatterns = [
             url(r'^admin/', admin.site.urls),
-            url(r'^daraja/', include('django_daraja.urls')),
+            url(r'^', include('my_app.urls')),
         ]
 
 Python 3:
@@ -148,15 +153,15 @@ Python 3:
     	:caption: urls.py
     	:name: urls_python_3.py
 
-        from django.contrib import admin
         from django.urls import path, include
+        from django.contrib import admin
         
         urlpatterns = [
             path('admin/', admin.site.urls),
             path('', include('my_app.urls')),
         ]
 
-In ``my_app/urls.py`` Add th..	code to create a test endpoint
+In ``my_app/urls.py`` Add the code to create a test endpoint
 
 Python 2:
     ..	code-block:: python
@@ -177,6 +182,7 @@ Python 3:
 
         from django.urls import path, include
         from . import views
+
         urlpatterns = [
             path('', views.index, name='index'),
         ]
@@ -197,7 +203,7 @@ In ``my_app/views.py`` Create a test index view
         def index(request):
             cl = MpesaClient()
             # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-            phone_number = 'PHONE_NUMBER'
+            phone_number = '07xxxxxxxx'
             amount = 1
             account_reference = 'reference'
             transaction_desc = 'Description'
@@ -220,6 +226,7 @@ On the command line, run migrations to add the models created by the library
 -----------------
 
 Then run the server
+
     ..	code-block:: none
 
         $ python manage.py runserver
@@ -237,3 +244,5 @@ If the STK push was successful, you should see an STK prompt on your phone (the 
             "ResponseDescription": "Success. Request accepted for processing",
             "CustomerMessage": "Success. Request accepted for processing"
         }
+
+You will also receive a notification on the callback endpoint that you specified having the results of the STK push.

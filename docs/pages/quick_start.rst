@@ -25,13 +25,11 @@ Run these commands to create  a django project
 3. Environment Configuration
 ----------------------------
 
-Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with these details:
+Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with the details below. Test credentials (for sandbox testing) can be found at https://developer.safaricom.co.ke/test_credentials. The consumer key and secret will be in the app details for a sandbox app you create in the developer portal (https://developer.safaricom.co.ke/user/me/apps)
 
     ..	code-block:: none
     	:caption: .env
     	:name: .env
-
-        # MPESA Configuration variables     
                 
         # The Mpesa environment to use
         # Possible values: sandbox, production
@@ -44,13 +42,14 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
         MPESA_CONSUMER_SECRET=mpesa_consumer_secret
         
         
-        #Shortcode to use for transactions
+        #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
         
         MPESA_SHORTCODE=mpesa_shortcode
         
         
         # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
         # This only has a different value on sandbox, you do not need to set it on production
+        # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
         
         MPESA_EXPRESS_SHORTCODE=mpesa_express_shortcode        
         
@@ -73,8 +72,6 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 	    	:caption: settings.py
 	    	:name: settings.py
 
-	        # MPESA Configuration variables     
-	                        
 	        # The Mpesa environment to use
 	        # Possible values: sandbox, production
 
@@ -86,13 +83,14 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 	        MPESA_CONSUMER_SECRET = 'mpesa_consumer_secret'
 
 
-	        #Shortcode to use for transactions
+	        #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
 	        MPESA_SHORTCODE = 'mpesa_shortcode'
 
 
 	        # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
 	        # This only has a different value on sandbox, you do not need to set it on production
+	        # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
 
 	        MPESA_EXPRESS_SHORTCODE = 'mpesa_express_shortcode'
 
@@ -111,7 +109,7 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 
 You could also store some configuration in ``settings.py`` and other variables in a ``.env`` file. The library will first attempt to get the configuration variable from ``settings.py``, and if not found it will revert to the os environment configuration (``os.environ``) and if not found it will look for the configuratin in a ``.env`` file.
 
-N/B:
+**N/B:**
 Remember to add the ``.env`` file in your ``.gitignore``, to prevent having configurations within version control. You can include a ``.env.example`` file with example configurations to version control, to guide other collaborators working on your project.
 
 4 Settings configuration

@@ -10,8 +10,8 @@ This is a django library that interacts with the MPESA Daraja API.
 
 .. toctree::
    
-   01-introduction
-   02-quick_start
+   pages/introduction
+   pages/quick_start
 
 
 

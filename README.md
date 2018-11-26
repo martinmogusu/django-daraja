@@ -8,7 +8,7 @@ This is a django library based on the Safaricom MPESA daraja API. This is a djan
 [![Documentation Status](https://readthedocs.org/projects/django-daraja/badge/?version=latest)](https://django-daraja.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://badge.fury.io/py/django-daraja.svg)](https://badge.fury.io/py/django-daraja)
-
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-daraja.svg)
 
 Read the full documentation at https://django-daraja.readthedocs.io
 

@@ -22,7 +22,12 @@ Run these commands to create  a django project
         $ cd my_site
         $ django-admin startapp my_app
 
-3. Environment Configuration
+3. Create a developer app
+-------------------------
+
+Head to https://developer.safaricom.co.ke and create a developer account, log in and create an app. You will use the **Consumer Key** and **Consumer Secret** of this app, as well as the **test credentials** assigned to you for the next step. 
+
+4. Environment Configuration
 ----------------------------
 
 Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with the details below. 
@@ -30,7 +35,6 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
 	.. hint::
 		Test credentials (for sandbox testing) can be found at https://developer.safaricom.co.ke/test_credentials.
 
-		Create an app at https://developer.safaricom.co.ke/user/me/apps and click on its details to obtain the consumer key and secre
 
     ..	code-block:: none
     	:caption: .env
@@ -46,11 +50,9 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
         MPESA_CONSUMER_KEY=mpesa_consumer_key
         MPESA_CONSUMER_SECRET=mpesa_consumer_secret
         
-        
         #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
         
-        MPESA_SHORTCODE=mpesa_shortcode
-        
+        MPESA_SHORTCODE=mpesa_shortcode     
         
         # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
         # This only has a different value on sandbox, you do not need to set it on production
@@ -90,11 +92,9 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 	        MPESA_CONSUMER_KEY = 'mpesa_consumer_key'
 	        MPESA_CONSUMER_SECRET = 'mpesa_consumer_secret'
 
-
 	        #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
 	        MPESA_SHORTCODE = 'mpesa_shortcode'
-
 
 	        # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
 	        # This only has a different value on sandbox, you do not need to set it on production
@@ -120,8 +120,8 @@ You could also store some configuration in ``settings.py`` and other variables i
 .. hint::
 	Remember to add the ``.env`` file in your ``.gitignore``, to prevent having configurations within version control. You can include a ``.env.example`` file with example configurations to version control, to guide other collaborators working on your project.
 
-4 Settings configuration
-------------------------
+5. Settings configuration
+-------------------------
 
 In ``settings.py``, add ``django_daraja``  and ``my_app`` to the ``INSTALLED_APPS`` list
 
@@ -131,12 +131,11 @@ In ``settings.py``, add ``django_daraja``  and ``my_app`` to the ``INSTALLED_APP
 
         INSTALLED_APPS = [
             ...,
-            'django.contrib.staticfiles',
             'django_daraja',
             'my_app',
         ]
 
-5. URL Configuration
+6. URL Configuration
 --------------------
 
 In ``urls.py``, Add the URL configuration
@@ -195,7 +194,7 @@ Python 3:
             path('daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
         ]
 
-6. Create a view
+7. Create a view
 ----------------
 
 In ``my_app/views.py`` Create a test index view
@@ -226,9 +225,9 @@ In ``my_app/views.py`` Create a test index view
 .. note::
 	- Use a Safaricom number that you have access to for the ``phone_number`` parameter, so as to be able to receive the prompt on your phone.
 	- You will need to define a url with the name ``mpesa_stk_push_callback``, and this is where MPESA will send the results of the STK push once the customer enters the PIN or cancels the transaction, or in case the prompt times out.
-	- This example will work if your site is already hosted, since the callback URL needs to be accessible via internet. For local testing purposes, you can use an endpoint hosted outside your site to check the notification received on the callback URL. I've hosted a test listener at https://darajambili.herokuapp.com, which you can use to view logs of notifications received. You can head over there to pick a sample STK callback URL to use.
+	- This example will work if your site is already hosted, since the callback URL needs to be accessible via internet. For local testing purposes, you can use an endpoint hosted outside your site to check the notification received on the callback URL. There is a test listener hosted at https://darajambili.herokuapp.com, which you can use to view logs of notifications received. You can head over there to pick a callback URL to use for STK push.
 
-7. Run Migrations
+8. Run Migrations
 -----------------
 
 On the command line, run migrations to add the models created by the library
@@ -237,7 +236,7 @@ On the command line, run migrations to add the models created by the library
 
         $ python manage.py migrate
 
-8. Run the server
+9. Run the server
 -----------------
 
 Then run the server

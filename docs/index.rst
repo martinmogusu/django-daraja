@@ -8,14 +8,16 @@ Welcome to django-daraja's documentation!
 
 This is a django library that interacts with the MPESA Daraja API. Source code can be found https://github.com/martinmogusu/django-daraja.git MPESA Daraja documentattion can be found at https://developer.safaricom.co.ke
 
-Installing
-==========
+Installation
+============
 To install the library, run:
 
 	..	code-block:: none
 
 		pip install django_daraja
 
+Documentation
+=============
 
 .. toctree::
    :maxdepth: 2

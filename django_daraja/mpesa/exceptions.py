@@ -2,6 +2,11 @@
 Exceptions raised during usage of the MPESa API
 '''
 
+class MpesaError(Exception):
+	'''
+	Raised for a general error regarding the library
+	'''
+
 class IllegalPhoneNumberException(Exception):
 	'''
 	Raised when phone number is in illegal format.

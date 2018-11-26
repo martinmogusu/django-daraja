@@ -72,7 +72,7 @@ def api_base_url():
 
 def generate_access_token_request(consumer_key = None, consumer_secret = None):
 	'''
-	Makes call to OAuth API
+	Makes call to OAuth API to generate access token
 	'''
 
 	url = api_base_url() + 'oauth/v1/generate?grant_type=client_credentials'
@@ -90,11 +90,17 @@ def generate_access_token_request(consumer_key = None, consumer_secret = None):
 
 def generate_access_token():
 	'''
-	Parses OAuth response to generate access token, then updates database access token value
+	Parses generated OAuth access token, then updates database access token value
 	'''
 
 	r = generate_access_token_request()
-	token = json.loads(r.text)['access_token']
+	if r.status_code != 200:
+		# Retry to generate access token
+		r = generate_access_token_request()
+		if r.status_code != 200:
+			raise MpesaError('Unable to generate access token')
+
+	token = r.json()['access_token']
 
 	AccessToken.objects.all().delete()
 	access_token = AccessToken.objects.create(token=token)

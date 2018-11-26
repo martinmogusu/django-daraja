@@ -12,6 +12,7 @@ from decouple import config, UndefinedValueError
 import os
 from requests import Response
 import time
+from django.conf import settings
 
 
 class MpesaResponse(Response):
@@ -44,11 +45,13 @@ def mpesa_config(key):
 		key {str} -- The configuration key
 	'''
 
-	try:
-		value = config(key)
-	except UndefinedValueError:
-		# Check key in settings file
-		raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
+	value = getattr(settings, key)
+	if value is None:
+		try:
+			value = config(key)
+		except UndefinedValueError:
+			# Check key in settings file
+			raise MpesaConfigurationException('Mpesa environment not configured properly - ' + key + ' not found')
 
 	return value
 

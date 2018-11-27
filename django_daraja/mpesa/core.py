@@ -8,23 +8,48 @@ from .utils import *
 from decouple import config
 
 class MpesaClient:
-	'''
+	"""
 	This is the core MPESA client. 
 
 	The Mpesa Client will access all interactions with the MPESA Daraja API.
-	'''
+	"""
 
 	auth_token = ''
 
 	def __init__(self):
-		'''
+		"""
 		The constructor for MpesaClient class
-		'''
+		"""
 
 	def access_token(self):
+		"""
+		Generate an OAuth access token.
+
+		Returns:
+			bool: A string containg a valid OAuth access token
+		"""
+		
 		return mpesa_access_token()
 
 	def stk_push(self, phone_number, amount, account_reference, transaction_desc, callback_url):
+		"""
+		Attempt to send an STK prompt to customer phone
+
+		Args:
+			phone_number (str): -- The Mobile Number to receive the STK Pin Prompt.
+			amount (int) -- This is the Amount transacted normaly a numeric value. Money that customer pays to the Shorcode. Only whole numbers are supported.
+			account_reference (str) -- This is an Alpha-Numeric parameter that is defined by your system as an Identifier of the transaction for CustomerPayBillOnline transaction type. Along with the business name, this value is also displayed to the customer in the STK Pin Prompt message. Maximum of 12 characters.
+			transaction_desc (str) -- This is any additional information/comment that can be sent along with the request from your system. Maximum of 13 Characters.
+			call_back_url (str) -- This s a valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API.
+
+		Returns:
+			MpesaResponse: MpesaResponse object containing the details of the API response
+		
+		Raises:
+			MpesaInvalidParameterException: Invalid parameter passed
+			MpesaConnectionError: Connection error
+		"""
+
 		if str(account_reference).strip() == '':
 			raise MpesaInvalidParameterException('Account reference cannot be blank')
 		if str(transaction_desc).strip() == '':

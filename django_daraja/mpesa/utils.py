@@ -1,6 +1,6 @@
-'''
+"""
 General utilities for the MPESA functions
-'''
+"""
 
 from __future__ import print_function
 from .exceptions import *
@@ -22,12 +22,12 @@ class MpesaResponse(Response):
 
 
 def mpesa_response(r):
-	'''
-	Creates MpesaResponse object from requests.Response object
+	"""
+	Create MpesaResponse object from requests.Response object
 	
 	Arguments:
-		r {requests.Response} -- The response to convert
-	'''
+		r (requests.Response) -- The response to convert
+	"""
 
 	r.__class__ = MpesaResponse
 	json_response = r.json()
@@ -38,12 +38,18 @@ def mpesa_response(r):
 
 
 def mpesa_config(key):
-	'''
-	Gets Mpesa configuration variable with the matching key, otherwise returns MpesaConfigurationException
+	"""
+	Get Mpesa configuration variable with the matching key
 	
 	Arguments:
-		key {str} -- The configuration key
-	'''
+		key (str) -- The configuration key
+
+	Returns:
+		str: Mpesa configuration variable with the matching key
+
+	Raises:
+		MpesaConfigurationException: Key not found
+	"""
 
 	value = getattr(settings, key)
 	if value is None:
@@ -57,9 +63,15 @@ def mpesa_config(key):
 
 
 def api_base_url():
-	'''
-	Gets the base URL depending on the development environment (sandbox or production)
-	'''
+	"""
+	Gets the base URL for making API calls
+
+	Returns:
+		The base URL depending on development environment (sandbox or production)
+
+	Raises:
+		MpesaConfigurationException: Environment not sandbox or production
+	"""
 
 	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
 
@@ -71,9 +83,19 @@ def api_base_url():
 		raise MpesaConfigurationException('Mpesa environment not configured properly - MPESA_ENVIRONMENT should be sandbox or production')
 
 def generate_access_token_request(consumer_key = None, consumer_secret = None):
-	'''
-	Makes call to OAuth API to generate access token
-	'''
+	"""
+	Make a call to OAuth API to generate access token
+	
+	Arguments:
+		consumer_key (str) -- (Optional) The Consumer Key to use
+		consumer_secret (str) -- (Optional) The Consumer Secret to use
+
+	Returns:
+		requests.Response: Response object with the response details
+
+	Raises:
+		MpesaConnectionError: Connection error
+	"""
 
 	url = api_base_url() + 'oauth/v1/generate?grant_type=client_credentials'
 	consumer_key = consumer_key if consumer_key is not None else mpesa_config('MPESA_CONSUMER_KEY') 
@@ -83,15 +105,21 @@ def generate_access_token_request(consumer_key = None, consumer_secret = None):
 		r = requests.get(url, auth=(consumer_key, consumer_secret))
 	except requests.exceptions.ConnectionError:
 		raise MpesaConnectionError('Connection failed')
-	except Exception:
+	except Exception as ex:
 		return ex.message
 	
 	return r
 
 def generate_access_token():
-	'''
-	Parses generated OAuth access token, then updates database access token value
-	'''
+	"""
+	Parse generated OAuth access token, then updates database access token value
+
+	Returns:
+		AccessToken: The AccessToken object from the database
+
+	Raises:
+		MpesaError: Error generating access token
+	"""
 
 	r = generate_access_token_request()
 	if r.status_code != 200:
@@ -108,10 +136,13 @@ def generate_access_token():
 	return access_token
 
 def mpesa_access_token():
-	'''
-	Generates access token if the current one has expired or if token is non-existent
-	Otherwise returns existing access token
-	'''
+	"""
+	Generate access token if the current one has expired or if token is non-existent
+	Otherwise return existing access token
+
+	Returns:
+		str: A valid access token
+	"""
 
 	# access_token = generate_access_token()
 
@@ -130,9 +161,12 @@ def mpesa_access_token():
 	return access_token.token
 
 def format_phone_number(phone_number):
-	'''
-	Formats phone number into the format 2547XXXXXXXX
-	'''
+	"""
+	Format phone number into the format 2547XXXXXXXX
+	
+	Arguments:
+		phone_number (str) -- The phone number to format
+	"""
 
 	if len(phone_number) < 9:
 		raise IllegalPhoneNumberException('Phone number too short')
@@ -140,13 +174,13 @@ def format_phone_number(phone_number):
 		return '254' + phone_number[-9:]
 
 def sleep(seconds, message=''):
-	'''
-	Sleeps for the specified number of seconds
+	"""
+	Sleep for the specified number of seconds
 	
 	Arguments:
-		seconds {float} -- Number of seconds to sleep, can be a float
-		message {str} -- (Optional) message to display
-	'''
+		seconds (float) -- Number of seconds to sleep, can be a float
+		message (str) -- (Optional) message to display
+	"""
 
 	print()
 	print('===')

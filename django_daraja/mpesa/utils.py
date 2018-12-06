@@ -51,7 +51,7 @@ def mpesa_config(key):
 		MpesaConfigurationException: Key not found
 	"""
 
-	value = getattr(settings, key)
+	value = getattr(settings, key, None)
 	if value is None:
 		try:
 			value = config(key)

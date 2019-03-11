@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='django-daraja',
-    version='1.0.0',
+    version='1.1.0',
     description='A python django library for interacting with the Safaricom MPESA Daraja API.',
     long_description=
 '''

@@ -31,6 +31,29 @@ class MpesaClient:
 		
 		return mpesa_access_token()
 
+	def parse_stk_result(self, result):
+		"""
+		Parse the result of Lipa na MPESA Online Payment (STK Push)
+
+		Returns:
+			The result data as an array
+		"""
+		
+		payload = json.loads(result)
+		data = {}
+		callback = payload['Body']['stkCallback']
+		data['ResultCode'] = callback['ResultCode']
+		data['ResultDesc'] = callback['ResultDesc']
+		data['MerchantRequestID'] = callback['MerchantRequestID']
+		data['CheckoutRequestID'] = callback['CheckoutRequestID']
+		metadata = callback.get('CallbackMetadata')
+		if metadata:
+			metadata_items = metadata.get('Item')
+			for item in metadata_items:
+				data[item['Name']] = item.get('Value')
+		
+		return data
+
 	def stk_push(self, phone_number, amount, account_reference, transaction_desc, callback_url):
 		"""
 		Attempt to send an STK prompt to customer phone

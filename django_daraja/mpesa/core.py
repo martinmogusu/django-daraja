@@ -102,7 +102,7 @@ class MpesaClient:
 			'Password': password,
 			'Timestamp': timestamp,
 			'TransactionType': transaction_type,
-			'Amount': '1',
+			'Amount': amount,
 			'PartyA': party_a,
 			'PartyB': party_b,
 			'PhoneNumber': phone_number,

@@ -2,9 +2,15 @@ B2C Payment APIs
 ================
 
 The B2C Payment APIs are used to make Business to Customer payments. Currently 3 transactions are supported in this model:
-- Business Payment: This is a normal business to customer payment,  supports only M-Pesa registered customers.
-- Salary Payment: This supports sending money to both registere and unregistered M-Pesa customers.
-- Promotion Payment: This is a promotional payment to customers. The M-Pesa notification message is a congratulatory message. Supports only M-Pesa registered customers.
+
+Business Payment
+  This is a normal business to customer payment,  supports only M-Pesa registered customers.
+
+Salary Payment
+  This supports sending money to both registere and unregistered M-Pesa customers.
+
+Promotion Payment
+  This is a promotional payment to customers. The M-Pesa notification message is a congratulatory message. Supports only M-Pesa registered customers.
 
 Examples:
 

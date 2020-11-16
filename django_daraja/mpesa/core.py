@@ -4,7 +4,7 @@ import base64
 from datetime import datetime
 import json
 from .exceptions import MpesaInvalidParameterException, MpesaConnectionError
-from .utils import mpesa_access_token, format_phone_number, api_base_url, mpesa_config, mpesa_response
+from .utils import encrypt_security_credential, mpesa_access_token, format_phone_number, api_base_url, mpesa_config, mpesa_response
 from decouple import config
 
 class MpesaClient:
@@ -125,3 +125,77 @@ class MpesaClient:
 		except Exception as ex:
 			raise MpesaConnectionError(str(ex))
 
+	def b2c_payment(self, phone_number, amount, transaction_desc, callback_url, occassion, command_id):
+		"""
+		Attempt to perform a business payment transaction
+
+		Args:
+			phone_number (str): -- The Mobile Number to receive the STK Pin Prompt.
+			amount (int) -- This is the Amount transacted normaly a numeric value. Money that customer pays to the Shorcode. Only whole numbers are supported.
+			transaction_desc (str) -- This is any additional information/comment that can be sent along with the request from your system. Maximum of 13 Characters.
+			call_back_url (str) -- This s a valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API.
+			occassion (str) -- Any additional information to be associated with the transaction.
+
+		Returns:
+			MpesaResponse: MpesaResponse object containing the details of the API response
+		
+		Raises:
+			MpesaInvalidParameterException: Invalid parameter passed
+			MpesaConnectionError: Connection error
+		"""
+
+		if str(transaction_desc).strip() == '':
+			raise MpesaInvalidParameterException('Transaction description cannot be blank')
+		if not isinstance(amount, int):
+			raise MpesaInvalidParameterException('Amount must be an integer')
+
+		phone_number = format_phone_number(phone_number)
+		url = api_base_url() + 'mpesa/b2c/v1/paymentrequest'
+
+		business_short_code = mpesa_config('MPESA_SHORTCODE')
+
+		party_a = business_short_code
+		party_b = phone_number
+		initiator_username = mpesa_config('MPESA_INITIATOR_USERNAME')
+		initiator_security_credential = encrypt_security_credential(mpesa_config('MPESA_INITIATOR_SECURITY_CREDENTIAL'))
+
+		data = {
+			'InitiatorName': initiator_username,
+			'SecurityCredential': initiator_security_credential,
+			'CommandID': command_id,
+			'Amount': amount,
+			'PartyA': party_a,
+			'PartyB': party_b,
+			'Remarks': transaction_desc,
+			'QueueTimeOutURL': callback_url,
+			'ResultURL': callback_url,
+			'Occassion':  occassion
+		}
+
+		headers = {
+			'Authorization': 'Bearer ' + mpesa_access_token(),
+			'Content-type': 'application/json'
+		}
+
+		try:
+			r = requests.post(url, json=data, headers=headers)
+			response = mpesa_response(r)
+			print(r)
+			print(r.content)
+			return response
+		except requests.exceptions.ConnectionError:
+			raise MpesaConnectionError('Connection failed')
+		except Exception as ex:
+			raise MpesaConnectionError(str(ex))
+
+	def business_payment (self, phone_number, amount, transaction_desc, callback_url, occassion):
+		command_id = 'BusinessPayment'
+		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, command_id)
+
+	def salary_payment (self, phone_number, amount, transaction_desc, callback_url, occassion):
+		command_id = 'SalaryPayment'
+		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, command_id)
+
+	def promotion_payment (self, phone_number, amount, transaction_desc, callback_url, occassion):
+		command_id = 'PromotionPayment'
+		return self.b2c_payment(phone_number, amount, transaction_desc, callback_url, occassion, command_id)

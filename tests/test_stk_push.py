@@ -20,7 +20,7 @@ class MpesaStkPushTestCase(TestCase):
 		'''
 		
 		# Wait for a short while (to avoid SpikeArrest)
-		sleep(150, 'STK push success')
+		sleep(150, 'Test STK push success')
 
 		phone_number = config('LNM_PHONE_NUMBER')
 		amount = 1

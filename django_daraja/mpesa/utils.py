@@ -6,13 +6,17 @@ from __future__ import print_function
 from .exceptions import MpesaConfigurationException, IllegalPhoneNumberException, MpesaConnectionError, MpesaError
 from django_daraja.models import AccessToken
 import requests
-import json
 from django.utils import timezone
 from decouple import config, UndefinedValueError
 import os
 from requests import Response
 import time
 from django.conf import settings
+import os
+from django.conf import settings
+import base64
+from cryptography import x509
+from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
 
 
 class MpesaResponse(Response):
@@ -189,3 +193,30 @@ def sleep(seconds, message=''):
 	print()
 	print('===')
 	print()
+
+def encrypt_security_credential(credential):
+	"""
+	Generate an encrypted security credential from a plaintext value
+	
+	Arguments:
+		credential (str) -- The plaintext credential display
+	"""
+
+	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
+
+	if mpesa_environment in ('sandbox', 'production'):
+		certificate_name = mpesa_environment + '.cer'
+	else:
+		raise MpesaConfigurationException('Mpesa environment not configured properly - MPESA_ENVIRONMENT should be sandbox or production')
+
+	certificate_path = os.path.join(settings.BASE_DIR, 'certs', certificate_name)
+	return encrypt_rsa(certificate_path, credential)
+
+def encrypt_rsa(certificate_path, input):
+	message = input.encode('ascii')
+	with open(certificate_path, "rb") as cert_file:
+		cert = x509.load_pem_x509_certificate(cert_file.read())
+		encrypted = cert.public_key().encrypt(message, PKCS1v15())
+		output = base64.b64encode(encrypted).decode('ascii')
+
+	return output

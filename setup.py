@@ -32,7 +32,8 @@ MPESA Daraja API documentation can be found at https://developer.safaricom.co.ke
     install_requires=[
         'Django>=1.11',
         'python-decouple',
-        'requests'
+        'requests',
+        'cryptography'
     ],
     tests_require=[
         'nose',

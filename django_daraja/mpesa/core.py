@@ -3,8 +3,8 @@ from requests.auth import HTTPDigestAuth
 import base64
 from datetime import datetime
 import json
-from .exceptions import *
-from .utils import *
+from .exceptions import MpesaInvalidParameterException, MpesaConnectionError
+from .utils import mpesa_access_token, format_phone_number, api_base_url, mpesa_config, mpesa_response
 from decouple import config
 
 class MpesaClient:
@@ -119,7 +119,7 @@ class MpesaClient:
 		try:
 			r = requests.post(url, json=data, headers=headers)
 			response = mpesa_response(r)
-			return r
+			return response
 		except requests.exceptions.ConnectionError:
 			raise MpesaConnectionError('Connection failed')
 		except Exception as ex:

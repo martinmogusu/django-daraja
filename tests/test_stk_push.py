@@ -6,12 +6,13 @@ Test STK Push
 from django.test import TestCase
 from django_daraja.mpesa.core import MpesaClient
 from decouple import config
-from django_daraja.mpesa.utils import *
-from django_daraja.mpesa.exceptions import *
+from django_daraja.mpesa.exceptions import MpesaInvalidParameterException
+from django_daraja.mpesa.utils import sleep
 
 class MpesaStkPushTestCase(TestCase):
 
 	cl = MpesaClient()
+	callback_url = 'https://darajambili.herokuapp.com/express-payment'
 
 	def test_stk_push_success(self):
 		'''
@@ -25,8 +26,7 @@ class MpesaStkPushTestCase(TestCase):
 		amount = 1
 		account_reference = 'reference'
 		transaction_desc = 'Description'
-		callback_url = 'https://darajambili.herokuapp.com/express-payment'
-		response = self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+		response = self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, self.callback_url)
 		self.assertEqual(response.response_description, 'Success. Request accepted for processing')
 
 	def test_stk_push_empty_reference(self):
@@ -39,8 +39,7 @@ class MpesaStkPushTestCase(TestCase):
 			amount = 1
 			account_reference = ''
 			transaction_desc = 'Description'
-			callback_url = 'https://darajambili.herokuapp.com/express-payment'
-			response = self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+			self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, self.callback_url)
 
 		
 	def test_stk_push_empty_description(self):
@@ -53,12 +52,11 @@ class MpesaStkPushTestCase(TestCase):
 			amount = 1000000
 			account_reference = 'reference'
 			transaction_desc = ''
-			callback_url = 'https://darajambili.herokuapp.com/express-payment'
-			response = self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+			self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, self.callback_url)
 
 	def test_stk_push_invalid_amount(self):
 		'''
-		Test that STK push with empty description raises MpesaInvalidParameterException
+		Test that STK push with invalid amount raises MpesaInvalidParameterException
 		'''
 
 		with self.assertRaises(MpesaInvalidParameterException):
@@ -66,5 +64,4 @@ class MpesaStkPushTestCase(TestCase):
 			amount = 1.5
 			account_reference = 'reference'
 			transaction_desc = 'Description'
-			callback_url = 'https://darajambili.herokuapp.com/express-payment'
-			response = self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+			self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, self.callback_url)

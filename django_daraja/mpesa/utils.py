@@ -3,7 +3,7 @@ General utilities for the MPESA functions
 """
 
 from __future__ import print_function
-from .exceptions import *
+from .exceptions import MpesaConfigurationException, IllegalPhoneNumberException, MpesaConnectionError, MpesaError
 from django_daraja.models import AccessToken
 import requests
 import json
@@ -143,8 +143,6 @@ def mpesa_access_token():
 	Returns:
 		str: A valid access token
 	"""
-
-	# access_token = generate_access_token()
 
 	access_token = AccessToken.objects.first()
 	if access_token == None:

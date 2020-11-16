@@ -6,7 +6,8 @@ Test the Oauth API
 from __future__ import unicode_literals
 from django.test import TestCase
 from django_daraja.mpesa.core import MpesaClient
-from django_daraja.mpesa.utils import *
+from django_daraja.mpesa.utils import generate_access_token, generate_access_token_request
+from django.utils import timezone
 
 class MpesaOauthTestCase(TestCase):
 

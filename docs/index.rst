@@ -6,7 +6,7 @@
 Welcome to django-daraja's documentation!
 =========================================
 
-This is a django library that interacts with the MPESA Daraja API. Source code can be found https://github.com/martinmogusu/django-daraja.git MPESA Daraja documentattion can be found at https://developer.safaricom.co.ke
+This is a django library that interacts with the MPESA Daraja API. Source code can be found https://github.com/martinmogusu/django-daraja.git MPESA Daraja documentation can be found at https://developer.safaricom.co.ke
 
 Installation
 ============

@@ -180,8 +180,6 @@ class MpesaClient:
 		try:
 			r = requests.post(url, json=data, headers=headers)
 			response = mpesa_response(r)
-			print(r)
-			print(r.content)
 			return response
 		except requests.exceptions.ConnectionError:
 			raise MpesaConnectionError('Connection failed')

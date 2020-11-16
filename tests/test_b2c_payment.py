@@ -19,7 +19,7 @@ class MpesaB2CPaymentTestCase(TestCase):
 		'''
 		Test successful business payment
 		'''
-		
+
 		# Wait for a short while (to avoid SpikeArrest)
 		sleep(20, 'Test business payment success')
 

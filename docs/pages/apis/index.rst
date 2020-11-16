@@ -8,3 +8,4 @@ The django-daraja library supports the different MPESA APIs exposed by the Daraj
 
    oauth
    stk_push
+   b2c_payment

@@ -42,7 +42,7 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
                 
         # The Mpesa environment to use
         # Possible values: sandbox, production
-        
+
         MPESA_ENVIRONMENT=sandbox        
         
         # Credentials for the daraja app
@@ -55,9 +55,9 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
         MPESA_SHORTCODE=mpesa_shortcode     
         
         # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
-        # This only has a different value on sandbox, you do not need to set it on production
+        # This is only used on sandbox, do not set this variable in production
         # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
-        
+
         MPESA_EXPRESS_SHORTCODE=mpesa_express_shortcode        
         
         #Type of shortcode
@@ -72,6 +72,14 @@ Create a ``.env`` file in the root folder (``my_site``) and in the file load the
         # Production passkey is sent via email once you go live
         
         MPESA_PASSKEY=mpesa_passkey
+
+        # Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
+
+        MPESA_INITIATOR_USERNAME=initiator_username
+
+        # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
+
+        MPESA_INITIATOR_SECURITY_CREDENTIAL=initiator_security_credential
 
 Alternatively, in ``settings.py`` you can add the environment configuration as settings variables. 
 
@@ -96,9 +104,9 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 
 	        MPESA_SHORTCODE = 'mpesa_shortcode'
 
-	        # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
-	        # This only has a different value on sandbox, you do not need to set it on production
-	        # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
+            # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
+            # This is only used on sandbox, do not set this variable in production
+            # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
 
 	        MPESA_EXPRESS_SHORTCODE = 'mpesa_express_shortcode'
 
@@ -114,6 +122,14 @@ Alternatively, in ``settings.py`` you can add the environment configuration as s
 	        # Production passkey is sent via email once you go live
 
 	        MPESA_PASSKEY = 'mpesa_passkey'
+
+            # Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
+
+            MPESA_INITIATOR_USERNAME = 'initiator_username'
+
+            # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
+
+            MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'
 
 You could also store some configuration in ``settings.py`` and other variables in a ``.env`` file. The library will first attempt to get the configuration variable from ``settings.py``, and if not found it will revert to the os environment configuration (``os.environ``) and if not found it will look for the configuratin in a ``.env`` file.
 

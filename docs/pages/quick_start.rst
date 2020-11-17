@@ -90,7 +90,7 @@ Add the details below at the bottom of your `settings.py` file
 In ``settings.py``, add ``django_daraja``  and ``my_app`` to the ``INSTALLED_APPS`` list
 
     ..	code-block:: python
-    	:caption: settings.py
+    	:caption: my_site/settings.py
     	:name: settings_installed_apps
 
         INSTALLED_APPS = [
@@ -106,7 +106,7 @@ In ``urls.py``, Add the URL configuration
 
 Python 2:
     ..	code-block:: python
-    	:caption: urls.py
+    	:caption: my_site/urls.py
     	:name: urls_python_2
 
         from django.conf.urls import url, include
@@ -119,7 +119,7 @@ Python 2:
 
 Python 3:
     ..	code-block:: python
-    	:caption: urls.py
+    	:caption: my_site/urls.py
     	:name: urls_python_3
 
         from django.urls import path, include
@@ -180,7 +180,7 @@ In ``my_app/views.py`` Create a test index view
             transaction_desc = 'Description'
             callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
             response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-            return HttpResponse(response.text)
+            return HttpResponse(response.json)
 
         def stk_push_callback(request):
         	data = request.body

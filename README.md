@@ -69,4 +69,4 @@ On your browser, you will receive a message `Accept the service request successf
 
 You need a callback URL connected to the internet to receive the asynchronous result. In case you don't have one you can head over to http://darajambili.herokuapp.com and grab a callback URL to test the result.
 
-The full documentation of all supported API's can be found at http://django-daraja.readthedocs.io/
+The full documentation of all supported API's can be found at http://django-daraja.readthedocs.io

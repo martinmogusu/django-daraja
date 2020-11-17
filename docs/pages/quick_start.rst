@@ -30,111 +30,63 @@ Head to https://developer.safaricom.co.ke and create a developer account, log in
 4. Environment Configuration
 ----------------------------
 
-Create a ``.env`` file in the root folder (``my_site``) and in the file load the configuration for your daraja developer app. Fill it in with the details below. 
+Add the details below at the bottom of your `settings.py` file
 
 	.. hint::
 		Test credentials (for sandbox testing) can be found at https://developer.safaricom.co.ke/test_credentials.
 
 
-    ..	code-block:: none
-    	:caption: .env
-    	:name: .env
-                
+    ..	code-block:: python
+    	:caption: my_site/settings.py
+    	:name: my_site/settings.py
+
         # The Mpesa environment to use
         # Possible values: sandbox, production
 
-        MPESA_ENVIRONMENT=sandbox        
-        
+        MPESA_ENVIRONMENT = 'sandbox'
+
         # Credentials for the daraja app
-        
-        MPESA_CONSUMER_KEY=mpesa_consumer_key
-        MPESA_CONSUMER_SECRET=mpesa_consumer_secret
-        
+
+        MPESA_CONSUMER_KEY = 'mpesa_consumer_key'
+        MPESA_CONSUMER_SECRET = 'mpesa_consumer_secret'
+
         #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
-        
-        MPESA_SHORTCODE=mpesa_shortcode     
-        
+
+        MPESA_SHORTCODE = 'mpesa_shortcode'
+
         # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
         # This is only used on sandbox, do not set this variable in production
         # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
 
-        MPESA_EXPRESS_SHORTCODE=mpesa_express_shortcode        
-        
-        #Type of shortcode
+        MPESA_EXPRESS_SHORTCODE = 'mpesa_express_shortcode'
+
+        # Type of shortcode
         # Possible values: 
         # - paybill (For Paybill)
         # - till_number (For Buy Goods Till Number)
-        
-        MPESA_SHORTCODE_TYPE=paybill
-        
+
+        MPESA_SHORTCODE_TYPE = 'paybill'
+
         # Lipa na MPESA Online passkey
         # Sandbox passkey is available on test credentials page
         # Production passkey is sent via email once you go live
-        
-        MPESA_PASSKEY=mpesa_passkey
+
+        MPESA_PASSKEY = 'mpesa_passkey'
 
         # Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
 
-        MPESA_INITIATOR_USERNAME=initiator_username
+        MPESA_INITIATOR_USERNAME = 'initiator_username'
 
         # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
 
-        MPESA_INITIATOR_SECURITY_CREDENTIAL=initiator_security_credential
+        MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'
 
-Alternatively, in ``settings.py`` you can add the environment configuration as settings variables. 
 
 	.. warning::
-		Adding sensitive configuration in the settings file is not very recommended since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your commits.
+		Adding sensitive configuration in the settings file is not recommended on production since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your code, which will be added to version control.
+        
+        It is recommended to use a .env file and a library like `python-decouple` so that the configuration can be externalized when deploying to production
 
-	..	code-block:: python
-	    	:caption: settings.py
-	    	:name: settings.py
-
-	        # The Mpesa environment to use
-	        # Possible values: sandbox, production
-
-	        MPESA_ENVIRONMENT = 'sandbox'
-
-	        # Credentials for the daraja app
-
-	        MPESA_CONSUMER_KEY = 'mpesa_consumer_key'
-	        MPESA_CONSUMER_SECRET = 'mpesa_consumer_secret'
-
-	        #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
-
-	        MPESA_SHORTCODE = 'mpesa_shortcode'
-
-            # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
-            # This is only used on sandbox, do not set this variable in production
-            # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
-
-	        MPESA_EXPRESS_SHORTCODE = 'mpesa_express_shortcode'
-
-	        # Type of shortcode
-	        # Possible values: 
-	        # - paybill (For Paybill)
-	        # - till_number (For Buy Goods Till Number)
-
-	        MPESA_SHORTCODE_TYPE = 'paybill'
-
-	        # Lipa na MPESA Online passkey
-	        # Sandbox passkey is available on test credentials page
-	        # Production passkey is sent via email once you go live
-
-	        MPESA_PASSKEY = 'mpesa_passkey'
-
-            # Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
-
-            MPESA_INITIATOR_USERNAME = 'initiator_username'
-
-            # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
-
-            MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'
-
-You could also store some configuration in ``settings.py`` and other variables in a ``.env`` file. The library will first attempt to get the configuration variable from ``settings.py``, and if not found it will revert to the os environment configuration (``os.environ``) and if not found it will look for the configuratin in a ``.env`` file.
-
-.. hint::
-	Remember to add the ``.env`` file in your ``.gitignore``, to prevent having configurations within version control. You can include a ``.env.example`` file with example configurations to version control, to guide other collaborators working on your project.
 
 5. Settings configuration
 -------------------------

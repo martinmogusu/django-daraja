@@ -39,7 +39,7 @@ An example, to send an STK push prompt to customer phone, then display response 
         transaction_desc = 'Description'
         callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
         response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-        return HttpResponse(response.response_description)
+        return HttpResponse(response)
 ```
 
 On your browser, you will receive a message `Success. Request accepted for processing` on success of the STK push. You will also receive a notification on the callback endpoint (In this case the URL with the name `mpesa_stk_push_callback`), having the results of the STK push.
@@ -59,7 +59,7 @@ An example, to perform a BusinessPayment B2C (Business to Customer) transaction
         occassion = 'Test business payment occassion'
         callback_url = request.build_absolute_uri(reverse('mpesa_business_payment_callback'))
         response = cl.business_payment(phone_number, amount, transaction_desc, callback_url, occassion)
-        return HttpResponse(response.response_description)
+        return HttpResponse(response)
 
 ```
 

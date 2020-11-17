@@ -30,15 +30,17 @@ Head to https://developer.safaricom.co.ke and create a developer account, log in
 4. Environment Configuration
 ----------------------------
 
-Add the details below at the bottom of your `settings.py` file
-
 	.. hint::
 		Test credentials (for sandbox testing) can be found at https://developer.safaricom.co.ke/test_credentials.
 
+Add the details below at the bottom of your `settings.py` file
+
+	.. warning::
+		Adding sensitive configuration in the settings file is not recommended on production since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your code, which will be added to version control. It is recommended to use a .env file and a library like `python-decouple` so that the configuration can be externalized when deploying to production
 
     ..	code-block:: python
     	:caption: my_site/settings.py
-    	:name: my_site/settings.py
+    	:name: my_site_settings
 
         # The Mpesa environment to use
         # Possible values: sandbox, production
@@ -82,12 +84,6 @@ Add the details below at the bottom of your `settings.py` file
         MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'
 
 
-	.. warning::
-		Adding sensitive configuration in the settings file is not recommended on production since you will most likely NOT want to have configuration settings - e.g. consumer keys/secrets - as part of your code, which will be added to version control.
-        
-        It is recommended to use a .env file and a library like `python-decouple` so that the configuration can be externalized when deploying to production
-
-
 5. Settings configuration
 -------------------------
 
@@ -95,7 +91,7 @@ In ``settings.py``, add ``django_daraja``  and ``my_app`` to the ``INSTALLED_APP
 
     ..	code-block:: python
     	:caption: settings.py
-    	:name: settings_1.py
+    	:name: settings_installed_apps
 
         INSTALLED_APPS = [
             ...,
@@ -111,7 +107,7 @@ In ``urls.py``, Add the URL configuration
 Python 2:
     ..	code-block:: python
     	:caption: urls.py
-    	:name: urls_python_2.py
+    	:name: urls_python_2
 
         from django.conf.urls import url, include
         from django.contrib import admin
@@ -124,7 +120,7 @@ Python 2:
 Python 3:
     ..	code-block:: python
     	:caption: urls.py
-    	:name: urls_python_3.py
+    	:name: urls_python_3
 
         from django.urls import path, include
         from django.contrib import admin
@@ -139,7 +135,7 @@ In ``my_app/urls.py``, add the code to create a home page, as well as the endpoi
 Python 2:
     ..	code-block:: python
     	:caption: my_app/urls.py
-    	:name: my_app/urls_python_2.py
+    	:name: my_app_urls_python_2
        
         from django.conf.urls import url, include
         from . import views
@@ -152,7 +148,7 @@ Python 2:
 Python 3:
     ..	code-block:: python
     	:caption: my_app/urls.py
-    	:name: my_app/urls_python_3.py
+    	:name: my_app_urls_python_3
 
         from django.urls import path, include
         from . import views
@@ -169,7 +165,7 @@ In ``my_app/views.py`` Create a test index view
 
     ..	code-block:: python
     	:caption: my_app/views.py
-    	:name: my_app/views.py
+    	:name: my_app_views
 
         from django.shortcuts import render
         from django.http import HttpResponse

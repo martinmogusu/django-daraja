@@ -180,7 +180,7 @@ In ``my_app/views.py`` Create a test index view
             transaction_desc = 'Description'
             callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
             response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-            return HttpResponse(response.json)
+            return HttpResponse(response)
 
         def stk_push_callback(request):
         	data = request.body

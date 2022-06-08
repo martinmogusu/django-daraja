@@ -5,7 +5,7 @@ orbs:
 jobs:
   build-and-test:
     docker:
-      - image: cimg/python:3.10.2
+      - image: cimg/python:3.9.0
     steps:
       - checkout
       - python/install-packages:

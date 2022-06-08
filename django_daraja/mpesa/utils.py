@@ -177,25 +177,6 @@ def format_phone_number(phone_number):
 	else:
 		return '254' + phone_number[-9:]
 
-def sleep(seconds, message=''):
-	"""
-	Sleep for the specified number of seconds
-	
-	Arguments:
-		seconds (float) -- Number of seconds to sleep, can be a float
-		message (str) -- (Optional) message to display
-	"""
-
-	print()
-	print('===')
-	print(message, end="")
-	for i in range(seconds * 2):
-		time.sleep(0.5)
-		print('.', end="")
-	print()
-	print('===')
-	print()
-
 def encrypt_security_credential(credential):
 	"""
 	Generate an encrypted security credential from a plaintext value

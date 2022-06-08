@@ -7,7 +7,6 @@ from django.test import TestCase
 from django_daraja.mpesa.core import MpesaClient
 from decouple import config
 from django_daraja.mpesa.exceptions import MpesaInvalidParameterException
-from django_daraja.mpesa.utils import sleep
 
 class MpesaStkPushTestCase(TestCase):
 
@@ -18,9 +17,6 @@ class MpesaStkPushTestCase(TestCase):
 		'''
 		Test successful STK push
 		'''
-		
-		# Wait for a short while (to avoid SpikeArrest)
-		sleep(150, 'Test STK push success')
 
 		phone_number = config('LNM_PHONE_NUMBER')
 		amount = 1

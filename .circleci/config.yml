@@ -3,7 +3,27 @@ orbs:
   python: circleci/python@1.5.0
 
 jobs:
-  build-and-test:
+  build-and-test-py-27-django-1-8:
+    docker:
+      - image: cimg/python:3.9.0
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: pip install tox && tox -e py27-django1.8
+  build-and-test-py-27-django-1-11:
+    docker:
+      - image: cimg/python:3.9.0
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: pip install tox && tox -e py27-django1.11
+  build-and-test-py-39-django-2-1:
     docker:
       - image: cimg/python:3.9.0
     steps:
@@ -16,4 +36,6 @@ jobs:
 workflows:
   sample:
     jobs:
-      - build-and-test
+      - build-and-test-py-27-django-1-8
+      - build-and-test-py-27-django-1-11
+      - build-and-test-py-39-django-2-1

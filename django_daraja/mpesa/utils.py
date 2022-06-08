@@ -79,7 +79,9 @@ def api_base_url():
 
 	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
 
-	if mpesa_environment == 'sandbox':
+	if mpesa_environment == 'development':
+		return 'https://darajasimulator.azurewebsites.net/'
+	elif mpesa_environment == 'sandbox':
 		return 'https://sandbox.safaricom.co.ke/'
 	elif mpesa_environment == 'production':
 		return 'https://api.safaricom.co.ke/'
@@ -204,7 +206,7 @@ def encrypt_security_credential(credential):
 
 	mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
 
-	if mpesa_environment in ('sandbox', 'production'):
+	if mpesa_environment in ('development', 'sandbox', 'production'):
 		certificate_name = mpesa_environment + '.cer'
 	else:
 		raise MpesaConfigurationException('Mpesa environment not configured properly - MPESA_ENVIRONMENT should be sandbox or production')

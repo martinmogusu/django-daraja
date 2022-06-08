@@ -12,7 +12,7 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pip install tox && tox -e py39-django2.1
+          command: echo "$LNM_PHONE_NUMBER" && echo "$B2C_PHONE_NUMBER" && pip install tox && tox -e py39-django2.1
 workflows:
   sample:
     jobs:

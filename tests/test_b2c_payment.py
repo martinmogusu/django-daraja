@@ -7,7 +7,6 @@ from django.test import TestCase
 from django_daraja.mpesa.core import MpesaClient
 from decouple import config
 from django_daraja.mpesa.exceptions import MpesaInvalidParameterException
-from django_daraja.mpesa.utils import sleep
 
 class MpesaB2CPaymentTestCase(TestCase):
 
@@ -20,9 +19,6 @@ class MpesaB2CPaymentTestCase(TestCase):
 		Test successful business payment
 		'''
 
-		# Wait for a short while (to avoid SpikeArrest)
-		sleep(20, 'Test business payment success')
-
 		phone_number = config('B2C_PHONE_NUMBER')
 		amount = 1
 		transaction_desc = 'Description'
@@ -34,9 +30,6 @@ class MpesaB2CPaymentTestCase(TestCase):
 		'''
 		Test successful salary payment
 		'''
-		
-		# Wait for a short while (to avoid SpikeArrest)
-		sleep(20, 'Test salary payment success')
 
 		phone_number = config('B2C_PHONE_NUMBER')
 		amount = 1
@@ -49,9 +42,6 @@ class MpesaB2CPaymentTestCase(TestCase):
 		'''
 		Test successful promotion payment
 		'''
-
-		# Wait for a short while (to avoid SpikeArrest)
-		sleep(20, 'Test promotion payment success')
 
 		phone_number = config('B2C_PHONE_NUMBER')
 		amount = 1

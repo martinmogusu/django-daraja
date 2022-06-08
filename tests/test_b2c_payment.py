@@ -19,7 +19,7 @@ class MpesaB2CPaymentTestCase(TestCase):
 		Test successful business payment
 		'''
 
-		phone_number = config('B2C_PHONE_NUMBER')
+		phone_number = config('LNM_PHONE_NUMBER')
 		amount = 1
 		transaction_desc = 'Description'
 		occassion = 'Occassion'
@@ -31,7 +31,7 @@ class MpesaB2CPaymentTestCase(TestCase):
 		Test successful salary payment
 		'''
 
-		phone_number = config('B2C_PHONE_NUMBER')
+		phone_number = config('LNM_PHONE_NUMBER')
 		amount = 1
 		transaction_desc = 'Description'
 		occassion = 'Occassion'
@@ -43,7 +43,7 @@ class MpesaB2CPaymentTestCase(TestCase):
 		Test successful promotion payment
 		'''
 
-		phone_number = config('B2C_PHONE_NUMBER')
+		phone_number = config('LNM_PHONE_NUMBER')
 		amount = 1
 		transaction_desc = 'Description'
 		occassion = 'Occassion'
@@ -56,7 +56,7 @@ class MpesaB2CPaymentTestCase(TestCase):
 		'''
 
 		with self.assertRaises(MpesaInvalidParameterException):
-			phone_number = config('B2C_PHONE_NUMBER')
+			phone_number = config('LNM_PHONE_NUMBER')
 			amount = 1000000
 			occassion = 'occassion'
 			transaction_desc = ''
@@ -68,7 +68,7 @@ class MpesaB2CPaymentTestCase(TestCase):
 		'''
 
 		with self.assertRaises(MpesaInvalidParameterException):
-			phone_number = config('B2C_PHONE_NUMBER')
+			phone_number = config('LNM_PHONE_NUMBER')
 			amount = 1.5
 			occassion = 'occassion'
 			transaction_desc = 'Description'

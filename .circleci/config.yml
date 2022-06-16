@@ -32,7 +32,7 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pip install tox && tox -e py39-django2.1
+          command: printenv B2C_PHONE_NUMBER && pip install tox && tox -e py39-django2.1
 workflows:
   sample:
     jobs:

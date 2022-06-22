@@ -32,9 +32,8 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pip install tox && tox -e py27-django1.11
-          environment:
-            B2C_PHONE_NUMBER: 254722000000
+          command: |
+            B2C_PHONE_NUMBER=254722000000 pip install tox && tox -e py27-django1.11
 workflows:
   sample:
     jobs:

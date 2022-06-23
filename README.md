@@ -4,7 +4,7 @@
 
 This is a django library based on the Safaricom MPESA daraja API. This is a django library based on the Safaricom MPESA daraja API. Use it for a simplified experience, spend less time setting up...
 
-[![Build Status](https://travis-ci.org/martinmogusu/django-daraja.svg?branch=master)](https://travis-ci.org/martinmogusu/django-daraja)
+[![Build Status](https://circleci.com/gh/martinmogusu/django-daraja.svg?style=svg)](https://circleci.com/gh/martinmogusu/django-daraja)
 [![Documentation Status](https://readthedocs.org/projects/django-daraja/badge/?version=latest)](https://django-daraja.readthedocs.io/en/latest/?badge=latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PyPI version](https://badge.fury.io/py/django-daraja.svg)](https://badge.fury.io/py/django-daraja)
@@ -30,7 +30,7 @@ An example, to send an STK push prompt to customer phone, then display response 
 
 ```python
     from django_daraja.mpesa.core import MpesaClient
-    
+
     def index(request):
         cl = MpesaClient()
         phone_number = '0700111222'
@@ -50,7 +50,7 @@ An example, to perform a BusinessPayment B2C (Business to Customer) transaction
 
 ```python
     from django_daraja.mpesa.core import MpesaClient
-    
+
     def index(request):
         cl = MpesaClient()
         phone_number = '0700111222'

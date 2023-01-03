@@ -109,7 +109,7 @@ Python 2:
     	:caption: my_site/urls.py
     	:name: urls_python_2
 
-        from django.conf.urls import url, include
+        from django.urls import re_path as url, include
         from django.contrib import admin
 
         urlpatterns = [
@@ -137,7 +137,7 @@ Python 2:
     	:caption: my_app/urls.py
     	:name: my_app_urls_python_2
        
-        from django.conf.urls import url, include
+        from django.urls import re_path as url, include
         from . import views
 
         urlpatterns = [

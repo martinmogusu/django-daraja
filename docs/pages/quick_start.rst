@@ -137,12 +137,11 @@ Python 2:
     	:caption: my_app/urls.py
     	:name: my_app_urls_python_2
        
-        from django.conf.urls import url, include
+        from django.conf.urls import url
         from . import views
 
         urlpatterns = [
-            url(r'^$', views.index, name='index'),
-            url(r'^daraja/stk-push$', views.stk_push_callback, name='mpesa_stk_push_callback'),
+            url(r'^$', views.index, name='index')
         ]
 
 Python 3:
@@ -150,12 +149,11 @@ Python 3:
     	:caption: my_app/urls.py
     	:name: my_app_urls_python_3
 
-        from django.urls import path, include
+        from django.urls import path
         from . import views
 
         urlpatterns = [
-            path('', views.index, name='index'),
-            path('daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
+            path('', views.index, name='index')
         ]
 
 7. Create a view
@@ -178,18 +176,13 @@ In ``my_app/views.py`` Create a test index view
             amount = 1
             account_reference = 'reference'
             transaction_desc = 'Description'
-            callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+            callback_url = 'https://api.darajambili.com/express-payment'
             response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
             return HttpResponse(response)
 
-        def stk_push_callback(request):
-        	data = request.body
-        	# You can do whatever you want with the notification received from MPESA here.
-
 .. note::
-	- Use a Safaricom number that you have access to for the ``phone_number`` parameter, so as to be able to receive the prompt on your phone.
-	- You will need to define a url with the name ``mpesa_stk_push_callback``, and this is where MPESA will send the results of the STK push once the customer enters the PIN or cancels the transaction, or in case the prompt times out.
-	- This example will work if your site is already hosted, since the callback URL needs to be accessible via internet. For local testing purposes, you can use an endpoint hosted outside your site to check the notification received on the callback URL. There is a test listener hosted at https://darajambili.com, which you can use to view logs of notifications received. You can head over there to pick a callback URL to use for STK push.
+	- Use a Safaricom number that you have access to for the ``phone_number`` parameter, so as to be able to receive the M-PESA prompt on your phone.
+    - Once you have entered the PIN, you will receive a notification on the callback URL you provided. If you used the exact callback URL in the example above (i.e. https://api.darajambili.com/express-payment), you can head over to https://darajambili.com to view the notification received.
 
 8. Run Migrations
 -----------------

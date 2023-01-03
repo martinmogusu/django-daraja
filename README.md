@@ -37,12 +37,12 @@ An example, to send an STK push prompt to customer phone, then display response 
         amount = 1
         account_reference = 'reference'
         transaction_desc = 'Description'
-        callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+        callback_url = 'https://api.darajambili.com/express-payment'
         response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
         return HttpResponse(response)
 ```
 
-On your browser, you will receive a message `Success. Request accepted for processing` on success of the STK push. You will also receive a notification on the callback endpoint (In this case the URL with the name `mpesa_stk_push_callback`), having the results of the STK push.
+On your browser, you will receive a message `Success. Request accepted for processing` on success of the STK push, and on the phone number specified you will receive an MPESA PIN prompt. Once the transaction is complete, you will receive a notification on the callback URL you provided. If you used the exact callback URL in the example above (i.e. https://api.darajambili.com/express-payment), you can head over to https://darajambili.com to view the notification received
 
 ### B2C Payment
 
@@ -57,16 +57,12 @@ An example, to perform a BusinessPayment B2C (Business to Customer) transaction
         amount = 1
         transaction_desc = 'Business Payment Description'
         occassion = 'Test business payment occassion'
-        callback_url = request.build_absolute_uri(reverse('mpesa_business_payment_callback'))
+        callback_url = 'https://api.darajambili.com/b2c/result'
         response = cl.business_payment(phone_number, amount, transaction_desc, callback_url, occassion)
         return HttpResponse(response)
 
 ```
 
-On your browser, you will receive a message `Accept the service request successfully.` on success of the transaction. You will also receive a notification on the callback endpoint (In this case the URL with the name `mpesa_business_payment_callback`), having the results of the Business Payment Transaction.
-
-## Note
-
-You need a callback URL connected to the internet to receive the asynchronous result. In case you don't have one you can head over to https://darajambili.com and grab a callback URL to test the result.
+On your browser, you will receive a message `Accept the service request successfully.` on success of the transaction. Once the transaction is complete, you will receive a notification on the callback URL you provided. If you used the exact callback URL in the example above (i.e. https://api.darajambili.com/b2c/result), you can head over to https://darajambili.com to view the notification received
 
 The full documentation of all supported API's can be found at https://django-daraja.readthedocs.io

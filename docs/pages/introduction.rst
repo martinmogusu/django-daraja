@@ -30,8 +30,8 @@ An example, to send an STK push prompt to customer phone, then display response 
             amount = 1
             account_reference = 'reference'
             transaction_desc = 'Description'
-            callback_url = request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+            callback_url = 'https://api.darajambili.com/express-payment'
             response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
             return HttpResponse(response)
 
-On your browser, you will receive the API response message. You will also receive a notification on the callback endpoint (In this case the URL with the name ``mpesa_stk_push_callback``), having the results of the STK push.
+On your browser, you will receive the API response message and on the phone number specified you will receive an MPESA PIN prompt. Once you have entered the PIN, you will receive a notification on the callback URL you provided. If you used the exact callback URL in the example above (i.e. https://api.darajambili.com/express-payment), you can head over to https://darajambili.com to view the notification received.

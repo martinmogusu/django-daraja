@@ -20,9 +20,16 @@ from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
 
 
 class MpesaResponse(Response):
-	response_description = ""
-	error_code = None
+	request_id = ''
+	response_code = ''
+	response_description = ''
+	customer_message = ''
+	conversation_id = ''
+	originator_conversation_id = ''
+	error_code = ''
 	error_message = ''
+	merchant_request_id = ''
+	checkout_request_id = ''
 
 
 def mpesa_response(r):
@@ -35,9 +42,16 @@ def mpesa_response(r):
 
 	r.__class__ = MpesaResponse
 	json_response = r.json()
+	r.request_id = json_response.get('requestId', '')
+	r.response_code = json_response.get('ResponseCode', '')
 	r.response_description = json_response.get('ResponseDescription', '')
+	r.customer_message = json_response.get('CustomerMessage', '')
+	r.conversation_id = json_response.get('ConversationID', '')
+	r.originator_conversation_id = json_response.get('OriginatorConversationID', '')
 	r.error_code = json_response.get('errorCode')
 	r.error_message = json_response.get('errorMessage', '')
+	r.merchant_request_id = json_response.get('MerchantRequestID', '')
+	r.checkout_request_id = json_response.get('CheckoutRequestID', '')
 	return r
 
 
@@ -157,7 +171,6 @@ def mpesa_access_token():
 	else:
 		delta = timezone.now() - access_token.created_at
 		minutes = (delta.total_seconds()//60)
-		print('minutes: ', minutes)
 		if minutes > 50:
 			# Access token expired
 			access_token = generate_access_token()	

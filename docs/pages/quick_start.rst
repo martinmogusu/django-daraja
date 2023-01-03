@@ -189,7 +189,7 @@ In ``my_app/views.py`` Create a test index view
 .. note::
 	- Use a Safaricom number that you have access to for the ``phone_number`` parameter, so as to be able to receive the prompt on your phone.
 	- You will need to define a url with the name ``mpesa_stk_push_callback``, and this is where MPESA will send the results of the STK push once the customer enters the PIN or cancels the transaction, or in case the prompt times out.
-	- This example will work if your site is already hosted, since the callback URL needs to be accessible via internet. For local testing purposes, you can use an endpoint hosted outside your site to check the notification received on the callback URL. There is a test listener hosted at https://darajambili.herokuapp.com, which you can use to view logs of notifications received. You can head over there to pick a callback URL to use for STK push.
+	- This example will work if your site is already hosted, since the callback URL needs to be accessible via internet. For local testing purposes, you can use an endpoint hosted outside your site to check the notification received on the callback URL. There is a test listener hosted at https://darajambili.com, which you can use to view logs of notifications received. You can head over there to pick a callback URL to use for STK push.
 
 8. Run Migrations
 -----------------

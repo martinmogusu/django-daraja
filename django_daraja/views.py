@@ -9,8 +9,8 @@ from decouple import config
 from datetime import datetime
 
 cl = MpesaClient()
-stk_push_callback_url = 'https://darajambili.herokuapp.com/express-payment'
-b2c_callback_url = 'https://darajambili.herokuapp.com/b2c/result'
+stk_push_callback_url = 'https://api.darajambili.com/express-payment'
+b2c_callback_url = 'https://api.darajambili.com/b2c/result'
 
 def index(request):
 

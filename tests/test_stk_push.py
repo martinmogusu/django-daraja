@@ -11,7 +11,7 @@ from django_daraja.mpesa.exceptions import MpesaInvalidParameterException
 class MpesaStkPushTestCase(TestCase):
 
 	cl = MpesaClient()
-	callback_url = 'https://darajambili.herokuapp.com/express-payment'
+	callback_url = 'https://api.darajambili.com/express-payment'
 
 	def test_stk_push_success(self):
 		'''

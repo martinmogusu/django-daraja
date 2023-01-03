@@ -23,7 +23,11 @@ class MpesaStkPushTestCase(TestCase):
 		account_reference = 'reference'
 		transaction_desc = 'Description'
 		response = self.cl.stk_push(phone_number, amount, account_reference, transaction_desc, self.callback_url)
+		self.assertEqual(response.response_code, '0')
 		self.assertEqual(response.response_description, 'Success. Request accepted for processing')
+		self.assertTrue(len(response.merchant_request_id) > 0)
+		self.assertTrue(len(response.checkout_request_id) > 0)
+		self.assertTrue(len(response.customer_message) > 0)
 
 	def test_stk_push_empty_reference(self):
 		'''

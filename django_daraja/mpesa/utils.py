@@ -156,7 +156,7 @@ def mpesa_access_token():
 		access_token = generate_access_token()
 	else:
 		delta = timezone.now() - access_token.created_at
-		minutes = (delta.total_seconds()//60)%60
+		minutes = (delta.total_seconds()//60)
 		print('minutes: ', minutes)
 		if minutes > 50:
 			# Access token expired

@@ -22,4 +22,4 @@ This will assign the ``response`` variable with an ``MpesaResponse`` object cont
 
 .. note::
 	- Use a Safaricom number that you have access to for the ``phone_number`` parameter, so as to be able to receive the M-PESA prompt on your phone.
-    - Once you have entered the PIN, you will receive a notification on the callback URL you provided. If you used the exact callback URL in the example above (i.e. https://api.darajambili.com/express-payment), you can head over to https://darajambili.com to view the notification received.
+	- Once you have entered the PIN, you will receive a notification on the callback URL you provided. If you used the exact callback URL in the example above (i.e. https://api.darajambili.com/express-payment), you can head over to https://darajambili.com to view the notification received.

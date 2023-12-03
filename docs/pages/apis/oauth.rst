@@ -13,6 +13,6 @@ You can test the OAuth API by using the ``MpesaClient.access_token`` method
 		from django_daraja.mpesa.core import MpesaClient
 
 		cl = MpesaClient()
-		token - cl.access_token()
+		token = cl.access_token()
 
 This will assign the ``token`` variable with an access token generated from the OAuth endpoint, or stored locally if available. 

@@ -33,9 +33,9 @@ def business_payment_success(request):
 	phone_number = config('B2C_PHONE_NUMBER')
 	amount = 1
 	transaction_desc = 'Business Payment Description'
-	occassion = 'Test business payment occassion'
+	occasion = 'Test business payment occassion'
 	callback_url = b2c_callback_url
-	r = cl.business_payment(phone_number, amount, transaction_desc, callback_url, occassion)
+	r = cl.business_payment(phone_number, amount, transaction_desc, callback_url, occasion)
 	return JsonResponse(r.response_description, safe=False)
 
 def salary_payment_success(request):

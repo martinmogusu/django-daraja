@@ -26,7 +26,7 @@ class MpesaClient:
 		Generate an OAuth access token.
 
 		Returns:
-			bool: A string containg a valid OAuth access token
+			bool: A string containing a valid OAuth access token
 		"""
 		
 		return mpesa_access_token()
@@ -54,13 +54,29 @@ class MpesaClient:
 		
 		return data
 
+	def prepare_request(self, data):
+		"""
+			Created a common method to set up headers and construct the request to avoid repetition.
+
+			parameters -> (data : {'endpoint' : url})
+
+			return a tuple url, headers
+		"""
+		url = api_base_url() + data['endpoint']
+		headers = {
+			'Authorization' : 'Bearer ' + mpesa_access_token(),
+			'Content-type' : 'application/json'
+		}
+
+		return url, headers
+
 	def stk_push(self, phone_number, amount, account_reference, transaction_desc, callback_url):
 		"""
 		Attempt to send an STK prompt to customer phone
 
 		Args:
 			phone_number (str): -- The Mobile Number to receive the STK Pin Prompt.
-			amount (int) -- This is the Amount transacted normaly a numeric value. Money that customer pays to the Shorcode. Only whole numbers are supported.
+			amount (int) -- This is the Amount transacted normally a numeric value. Money that customer pays to the Shorcode. Only whole numbers are supported.
 			account_reference (str) -- This is an Alpha-Numeric parameter that is defined by your system as an Identifier of the transaction for CustomerPayBillOnline transaction type. Along with the business name, this value is also displayed to the customer in the STK Pin Prompt message. Maximum of 12 characters.
 			transaction_desc (str) -- This is any additional information/comment that can be sent along with the request from your system. Maximum of 13 Characters.
 			call_back_url (str) -- This s a valid secure URL that is used to receive notifications from M-Pesa API. It is the endpoint to which the results will be sent by M-Pesa API.
@@ -82,7 +98,6 @@ class MpesaClient:
 
 
 		phone_number = format_phone_number(phone_number)
-		url = api_base_url() + 'mpesa/stkpush/v1/processrequest'
 		passkey = mpesa_config('MPESA_PASSKEY')
 		
 		mpesa_environment = mpesa_config('MPESA_ENVIRONMENT')
@@ -111,10 +126,9 @@ class MpesaClient:
 			'TransactionDesc': transaction_desc
 		}
 
-		headers = {
-			'Authorization': 'Bearer ' + mpesa_access_token(),
-			'Content-type': 'application/json'
-		}
+		url , headers = self.prepare_request({
+			'endpoint' : 'mpesa/stkpush/v1/processrequest',
+		})
 
 		try:
 			r = requests.post(url, json=data, headers=headers)
@@ -150,8 +164,6 @@ class MpesaClient:
 			raise MpesaInvalidParameterException('Amount must be an integer')
 
 		phone_number = format_phone_number(phone_number)
-		url = api_base_url() + 'mpesa/b2c/v1/paymentrequest'
-
 		business_short_code = mpesa_config('MPESA_SHORTCODE')
 
 		party_a = business_short_code
@@ -172,10 +184,9 @@ class MpesaClient:
 			'Occassion':  occassion
 		}
 
-		headers = {
-			'Authorization': 'Bearer ' + mpesa_access_token(),
-			'Content-type': 'application/json'
-		}
+		url , headers = self.prepare_request({
+			'endpoint' : 'mpesa/b2c/v1/paymentrequest',
+		})
 
 		try:
 			r = requests.post(url, json=data, headers=headers)
